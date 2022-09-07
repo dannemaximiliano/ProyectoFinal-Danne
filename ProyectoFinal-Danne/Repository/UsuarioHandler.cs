@@ -74,6 +74,29 @@ namespace ProyectoFinal_Danne.Repository
             }
         }
 
+        public static bool CrearUsuario(Usuario nuevoUsuario)
+        {
+
+            String Query = "INSERT INTO Usuario(Nombre, Apellido, NombreUsuario, Contraseña, Mail) VALUES(@Nombre, @Apellido, @NombreUsuario, @Contraseña, @Mail)";
+
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand(Query, sqlConnection))
+                {
+                    sqlConnection.Open();
+
+                    sqlCommand.Parameters.Add(new SqlParameter("Nombre", SqlDbType.VarChar) { Value = nuevoUsuario.Nombre });
+                    sqlCommand.Parameters.Add(new SqlParameter("Apellido", SqlDbType.VarChar) { Value = nuevoUsuario.Apellido });
+                    sqlCommand.Parameters.Add(new SqlParameter("NombreUsuarioi", SqlDbType.VarChar) { Value = nuevoUsuario.NombreUsuario });
+                    sqlCommand.Parameters.Add(new SqlParameter("Contraseña", SqlDbType.VarChar) { Value = nuevoUsuario.Contraseña });
+                    sqlCommand.Parameters.Add(new SqlParameter("Mail", SqlDbType.VarChar) { Value = nuevoUsuario.Mail });
+
+                    sqlConnection.Close();
+                }
+            }
+            return true;
+        }
+
         public void UpdateContraseña(Usuario usuario)
         {
             try
